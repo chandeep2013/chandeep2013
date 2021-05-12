@@ -18,6 +18,11 @@
       <button class="submit" align="center" type="submit" onClick="CheckAuthorization()">Register</button>
       <button class="register" align="center" type="submit" onClick="CheckAuthorization()">Sign in</button>
       <p class="forgot" align="center"><a href="#">Forgot Password?</p>
+	  
+	  <div class="alert" id="loginMessage" style="display:none;">
+		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+		<strong>Login Successful!</strong> 
+	  </div>
    
     </div>
      
@@ -140,10 +145,62 @@ a {
     text-decoration: none
 }
 
+.alert {
+  padding: 20px;
+  background-color: Green;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
 @media (max-width: 600px) {
     .main {
         border-radius: 0px;
     }
     
+///////////// Js
+
+function CheckAuthorization() {
+
+    var username = document.getElementById("idUserName").value;
+    var Password = document.getElementById("idPassWord").value;
+
+    if (username != "" && Password != "") {
+        /////// rest service call
+        var get = $.ajax({
+            cache: false,
+            url: "", // your service name
+            type: "GET"
+        });
+        get.done(function (output) {
+
+            alert("Authentication successfull");
+        })
+        get.fail(function (err) {
+            alert("Authentication Not sucessfull");
+        });
+
+    }
+    else {
+       // alert("Please enter user name and password");
+    }
+	document.getElementById("loginMessage").style.display = "block";
+	setTimeout(function(){
+		window.location.href = "home.html";
+		}, 3000);
+}
 
 
